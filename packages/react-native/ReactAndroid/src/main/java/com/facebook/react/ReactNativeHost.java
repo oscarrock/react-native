@@ -21,7 +21,8 @@ import com.facebook.react.devsupport.DevSupportManagerFactory;
 import com.facebook.react.devsupport.interfaces.DevLoadingViewManager;
 import com.facebook.react.devsupport.interfaces.RedBoxHandler;
 import java.util.List;
-
+import com.facebook.hermes.reactexecutor.HermesExecutor;
+import com.facebook.hermes.reactexecutor.HermesExecutorFactory;
 /**
  * Simple class that holds an instance of {@link ReactInstanceManager}. This can be used in your
  * {@link Application class} (see {@link ReactApplication}), or as a static field.
@@ -105,8 +106,10 @@ public abstract class ReactNativeHost {
   }
 
   /** Get the {@link JavaScriptExecutorFactory}. Override this to use a custom Executor. */
-  protected @Nullable JavaScriptExecutorFactory getJavaScriptExecutorFactory() {
-    return null;
+  @Override
+  protected JavaScriptExecutorFactory getJavaScriptExecutorFactory() {
+            HermesExecutor.loadLibrary();
+            return new HermesExecutorFactory();
   }
 
   protected @Nullable ReactPackageTurboModuleManagerDelegate.Builder
